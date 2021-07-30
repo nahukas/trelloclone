@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import profilePic from '../assets/profile.jpg';
+import List from './List/List';
 
 const Dashboard: React.FC = () => (
   <>
@@ -86,6 +87,7 @@ const Dashboard: React.FC = () => (
               </li>
             </ul>
           </section>
+          <List />
         </main>
       </div>
     </div>
