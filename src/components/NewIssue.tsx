@@ -5,8 +5,8 @@ const NewIssue: React.FC = () => (
     <svg className="h-6 w-6" viewBox="0 0 24 24">
       <path
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
         d="M12 7v10m5-5H7"
       />
     </svg>
