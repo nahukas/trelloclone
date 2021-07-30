@@ -1,8 +1,11 @@
 import React from 'react';
+import Sidebar from './components/Sidebar';
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => (
-  <div>
-    <h1 className="text-3xl">Hello World</h1>
+  <div className="h-screen flex">
+    <Sidebar />
+    <Dashboard />
   </div>
 );
 
