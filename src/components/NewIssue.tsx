@@ -1,7 +1,14 @@
 import React from 'react';
 
-const NewIssue: React.FC = () => (
-  <button className="ml-3 flex items-center pl-2 pr-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700">
+interface NewIssueProps {
+  handleModalVisible: () => void;
+}
+
+const NewIssue: React.FC<NewIssueProps> = ({ handleModalVisible }) => (
+  <button
+    className="ml-3 flex items-center pl-2 pr-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700"
+    onClick={handleModalVisible}
+  >
     <svg className="h-6 w-6" viewBox="0 0 24 24">
       <path
         stroke="currentColor"

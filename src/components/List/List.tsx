@@ -9,9 +9,12 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = ({ title, cards, index }) => {
-  console.log(index);
   return (
-    <section className="ml-3 flex-shrink-0 p-3 w-80 bg-gray-100 rounded-sm">
+    <section
+      className={`${
+        index !== 0 && 'ml-3'
+      } flex-shrink-0 p-3 w-80 bg-gray-100 rounded-sm`}
+    >
       <Title title={title} />
       <ul className="mt-2">
         {cards.map((card) => (
