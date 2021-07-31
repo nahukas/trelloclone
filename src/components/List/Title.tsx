@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 
-const Title: React.FC = () => {
+interface ITitleProps {
+  title: string;
+}
+
+const Title: React.FC<ITitleProps> = ({ title }) => {
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('Backlog');
+  const [customTitle, setCustomTitle] = useState(title);
 
   return (
     <>
@@ -11,7 +15,7 @@ const Title: React.FC = () => {
           className="text-sm font-medium text-gray-900"
           type="text"
           onBlur={() => setOpen(!open)}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setCustomTitle(e.target.value)}
           value={title}
         />
       ) : (
