@@ -1,4 +1,15 @@
-export const backlogCards = [
+import { ICard } from '../components/List/Card';
+
+export interface IData {
+  lists: {
+    id: string;
+    title: string;
+    cards: ICard[];
+  }[];
+  listIds: string[];
+}
+
+const backlogCards = [
   {
     id: 'card-1',
     title: 'create boilerplate',
@@ -16,62 +27,39 @@ export const backlogCards = [
   },
 ];
 
-// export const doingCards = [
-//     {
-//         id: 'card-1',
-//         title: 'config data',
-//     },
-//     {
-//         id: 'card-2',
-//         title: 'config drag and drop',
-//     },
-//     {
-//         id: 'card-3',
-//         title: 'edit cards',
-//     },
-// ];
-
-// export interface DataProps {
-//     lists: {
-//       id: string;
-//       title: string;
-//       backlogCards: ICard[];
-//     }[];
-//     listIds: string[];
-//   }
-
-export const data2 = {
-  lists: {
-    'list-1': {
-      id: 'list-1',
-      title: 'Backlog',
-      cards: backlogCards,
-    },
-
-    // 'list-2': {
-    //     id: 'list-1',
-    //     title: 'Doing',
-    //     doingCards
-    // },
+const doingCards = [
+  {
+    id: 'card-1',
+    title: 'config data',
+    date: '2021-03-24',
   },
-  listIds: ['list-1'],
-};
+  {
+    id: 'card-2',
+    title: 'config drag and drop',
+    date: '2021-03-24',
+  },
+  {
+    id: 'card-3',
+    title: 'edit cards',
+    date: '2021-03-24',
+  },
+];
 
-const data = {
+const data: IData = {
   lists: [
     {
       id: 'list-1',
       title: 'Backlog',
       cards: backlogCards,
     },
+    {
+      id: 'list-1',
+      title: 'Doing',
+      cards: doingCards,
+    },
   ],
-  // 'list-2': {
-  //     id: 'list-1',
-  //     title: 'Doing',
-  //     doingCards
-  // },
-  listIds: ['list-1'],
+  // listIds: ['list-1'],
+  listIds: ['list-1', 'list-2'],
 };
-// listIds: ['list-1', 'list-2']
 
 export default data;
