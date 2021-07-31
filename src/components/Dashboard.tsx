@@ -2,9 +2,18 @@ import React from 'react';
 import Header from './Header';
 import profilePic from '../assets/profile.jpg';
 import List from './List/List';
-import Card from './List/Card';
+import { ICard } from './List/Card';
 
-const Dashboard: React.FC = () => (
+interface DataProps {
+  lists: {
+    id: string;
+    title: string;
+    cards: ICard[];
+  }[];
+  listIds: string[];
+}
+
+const Dashboard = ({ lists }: DataProps) => (
   <>
     <div className="flex-1 min-w-0 bg-white">
       <div className="border-b-2 border-gray-200">
@@ -89,7 +98,19 @@ const Dashboard: React.FC = () => (
             </ul>
           </section>
 
-          <List children={<Card />} />
+          {lists.map(({ id, title, cards }, index) => {
+            return (
+              <List
+                key={id}
+                index={index}
+                id={id}
+                title={title}
+                cards={cards}
+              />
+            );
+          })}
+
+          {/* <List id={lists.id} title={lists.title} cards={lists.backlogCards} /> */}
         </main>
       </div>
     </div>

@@ -1,15 +1,23 @@
-import { ReactChildren, ReactChild } from 'react';
+import Card, { ICard } from './Card';
 import Title from './Title';
 
 interface ListProps {
-  children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
+  id: string;
+  title: string;
+  cards: ICard[];
+  index: number;
 }
 
-const List = ({ children }: ListProps) => {
+const List: React.FC<ListProps> = ({ title, cards, index }) => {
+  console.log(index);
   return (
     <section className="ml-3 flex-shrink-0 p-3 w-80 bg-gray-100 rounded-sm">
-      <Title />
-      <ul className="mt-2">{children}</ul>
+      <Title title={title} />
+      <ul className="mt-2">
+        {cards.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
+      </ul>
     </section>
   );
 };
