@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import profilePic from '../assets/profile.jpg';
 import List from './List/List';
+import Card from './List/Card';
 
 const Dashboard: React.FC = () => (
   <>
@@ -87,7 +88,8 @@ const Dashboard: React.FC = () => (
               </li>
             </ul>
           </section>
-          <List />
+
+          <List children={<Card />} />
         </main>
       </div>
     </div>
