@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from './Header';
 import List from './List/List';
-import { ICard } from './List/Card';
 import Modal from './Modal';
 
-interface DashboardProps {
-  lists: {
-    id: string;
-    title: string;
-    cards: ICard[];
-  }[];
-  listIds: string[];
-}
+import { dataContext } from '../utils/storeApi';
 
-const Dashboard: React.FC<DashboardProps> = ({ lists }) => {
+const Dashboard: React.FC = () => {
+  const { data } = useContext(dataContext);
+  const { lists } = data;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleModalVisible = () => {
