@@ -1,5 +1,6 @@
 import { Droppable } from 'react-beautiful-dnd';
-import Card, { ICard } from './Card';
+import { ICard } from '../../data/data';
+import Card from './Card';
 import Title from './Title';
 
 interface ListProps {

@@ -2,25 +2,24 @@ import React, { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
-import store from './data/data';
+import store, { ICard } from './data/data';
 import { dataContext } from './context/storeApi';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 
-import { ICard } from './components/List/Card';
-
 const App: React.FC = () => {
   const [data, setData] = useState(store);
+  const currentUser = localStorage.getItem('trelloCloneUser') ?? 'nahuelCastro';
 
-  console.log(moment('2021-08-01').format('D MMMM YY'));
-
-  const addCard = (title: string, tag?: string) => {
+  const addCard = (title: string, assignedTo?: string, tag?: string) => {
     const cardId = uuid();
     const today = moment().format('YYYY-MM-DD');
     const newCard: ICard = {
       title,
       id: cardId,
       date: today,
+      createdBy: currentUser,
+      assignedTo,
       tag,
     };
 
@@ -59,6 +58,7 @@ const App: React.FC = () => {
     <dataContext.Provider
       value={{
         addCard,
+        currentUser,
         data,
       }}
     >

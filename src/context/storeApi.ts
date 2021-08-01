@@ -3,14 +3,15 @@ import { IData } from '../data/data';
 
 interface IContext {
   data: IData;
-  addCard: (title: string, tag?: string) => void;
+  currentUser: string;
+  addCard: (title: string, assignedBy?: string, tag?: string) => void;
 }
 
 const initial: IContext = {
   data: {
     lists: [],
-    listIds: [],
   },
+  currentUser: '',
   addCard: () => {},
 };
 

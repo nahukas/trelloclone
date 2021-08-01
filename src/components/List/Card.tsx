@@ -3,17 +3,8 @@ import profilePic from '../../assets/profile.jpg';
 import moment from 'moment';
 import { Draggable } from 'react-beautiful-dnd';
 import { EnumColor, EnumTag } from '../../data/constants';
+import { ICard } from '../../data/data';
 
-export interface ICard {
-  id: string;
-  title: string;
-  date: string;
-  tag?: string;
-}
-
-export interface ICardToEdit extends ICard {
-  list: string;
-}
 interface CardProps {
   card: ICard;
   index: number;

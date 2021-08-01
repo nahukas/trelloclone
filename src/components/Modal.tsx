@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { dataContext } from '../context/storeApi';
 import { tags } from '../data/constants';
-import { ICardToEdit } from './List/Card';
+import { ICardToEdit, users } from '../data/data';
 
 interface ModalProps {
   handleModalVisible: () => void;
@@ -11,6 +11,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
   const { addCard, data } = useContext(dataContext);
   const [title, setTitle] = useState('');
+  const [assignedTo, setAssignedTo] = useState('');
   const [tag, setTag] = useState('');
 
   useEffect(() => {
@@ -18,6 +19,9 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
       setTitle(cardToEdit.title);
       if (cardToEdit.tag) {
         setTag(cardToEdit.tag);
+      }
+      if (cardToEdit.assignedTo) {
+        setAssignedTo(cardToEdit.assignedTo);
       }
     }
   }, [cardToEdit]);
@@ -33,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
 
   const handleCreateCard = () => {
     if (title && title.replace(/\s/g, '').length) {
-      addCard(title, tag);
+      addCard(title, assignedTo, tag);
       resetFrom();
       handleModalVisible();
     }
@@ -49,6 +53,8 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
         .indexOf(cardToEdit.id);
       data.lists[sourceListIndex].cards[sourceCardIndex].title = title;
       data.lists[sourceListIndex].cards[sourceCardIndex].tag = tag;
+      data.lists[sourceListIndex].cards[sourceCardIndex].assignedTo =
+        assignedTo;
       resetFrom();
       handleModalVisible();
     }
@@ -132,6 +138,27 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                         onChange={(e) => setTitle(e.target.value)}
                         required
                       />
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                        htmlFor="title"
+                      >
+                        Assigned To
+                      </label>
+                      <select
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="assignedTo"
+                        value={assignedTo}
+                        onChange={(e) => setAssignedTo(e.target.value)}
+                      >
+                        <option value=""></option>
+                        {users.map((user) => (
+                          <option key={user.username} value={user.username}>
+                            {user.completeName}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="mb-4">
                       <label
