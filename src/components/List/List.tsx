@@ -1,3 +1,4 @@
+import { Droppable } from 'react-beautiful-dnd';
 import Card, { ICard } from './Card';
 import Title from './Title';
 
@@ -8,7 +9,7 @@ interface ListProps {
   index: number;
 }
 
-const List: React.FC<ListProps> = ({ title, cards, index }) => {
+const List: React.FC<ListProps> = ({ id, title, cards, index }) => {
   return (
     <section
       className={`${
@@ -17,9 +18,16 @@ const List: React.FC<ListProps> = ({ title, cards, index }) => {
     >
       <Title title={title} />
       <ul className="mt-2">
-        {cards.map((card) => (
-          <Card key={card.id} card={card} />
-        ))}
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {cards.map((card, index) => (
+                <Card key={card.id} card={card} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </ul>
     </section>
   );

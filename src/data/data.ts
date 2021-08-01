@@ -29,17 +29,17 @@ const backlogCards = [
 
 const doingCards = [
   {
-    id: 'card-1',
+    id: 'card-4',
     title: 'config data',
     date: '2021-03-24',
   },
   {
-    id: 'card-2',
+    id: 'card-5',
     title: 'config drag and drop',
     date: '2021-03-24',
   },
   {
-    id: 'card-3',
+    id: 'card-6',
     title: 'edit cards',
     date: '2021-03-24',
   },
@@ -53,12 +53,11 @@ const data: IData = {
       cards: backlogCards,
     },
     {
-      id: 'list-1',
+      id: 'list-2',
       title: 'Doing',
       cards: doingCards,
     },
   ],
-  // listIds: ['list-1'],
   listIds: ['list-1', 'list-2'],
 };
 
