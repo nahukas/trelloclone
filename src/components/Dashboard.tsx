@@ -4,8 +4,9 @@ import List from './List/List';
 import Modal from './Modal';
 
 import { dataContext } from '../context/storeApi';
-import { ICardToEdit } from './List/Card';
+
 import { getCardByListId } from '../utils/getCardByListId';
+import { ICardToEdit } from '../data/data';
 
 const Dashboard: React.FC = () => {
   const { data } = useContext(dataContext);
