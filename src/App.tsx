@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
+import moment from 'moment';
 import store from './data/data';
 import { dataContext } from './context/storeApi';
 import Sidebar from './components/Sidebar';
@@ -11,12 +12,15 @@ import { ICard } from './components/List/Card';
 const App: React.FC = () => {
   const [data, setData] = useState(store);
 
+  console.log(moment('2021-08-01').format('D MMMM YY'));
+
   const addCard = (title: string, tag?: string) => {
     const cardId = uuid();
+    const today = moment().format('YYYY-MM-DD');
     const newCard: ICard = {
       title,
       id: cardId,
-      date: '2021-03-30',
+      date: today,
       tag,
     };
 
