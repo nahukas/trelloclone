@@ -7,9 +7,16 @@ interface ListProps {
   title: string;
   cards: ICard[];
   index: number;
+  handleModalVisible: (listId?: string, cardId?: string) => void;
 }
 
-const List: React.FC<ListProps> = ({ id, title, cards, index }) => {
+const List: React.FC<ListProps> = ({
+  id,
+  title,
+  cards,
+  index,
+  handleModalVisible,
+}) => {
   return (
     <section
       className={`${
@@ -22,7 +29,13 @@ const List: React.FC<ListProps> = ({ id, title, cards, index }) => {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {cards.map((card, index) => (
-                <Card key={card.id} card={card} index={index} />
+                <Card
+                  key={card.id}
+                  card={card}
+                  index={index}
+                  listId={id}
+                  handleModalVisible={handleModalVisible}
+                />
               ))}
               {provided.placeholder}
             </div>

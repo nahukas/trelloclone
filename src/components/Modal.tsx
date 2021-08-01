@@ -1,18 +1,47 @@
-import React, { useContext, useState } from 'react';
-import { dataContext } from '../utils/storeApi';
+import React, { useContext, useState, useEffect } from 'react';
+import { dataContext } from '../context/storeApi';
+import { ICardToEdit } from './List/Card';
 
 interface ModalProps {
   handleModalVisible: () => void;
+  cardToEdit?: ICardToEdit;
 }
 
-const Modal: React.FC<ModalProps> = ({ handleModalVisible }) => {
-  const { addCard } = useContext(dataContext);
-
+const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
+  const { addCard, data } = useContext(dataContext);
   const [title, setTitle] = useState('');
 
+  useEffect(() => {
+    if (cardToEdit) {
+      setTitle(cardToEdit.title);
+    }
+  }, [cardToEdit]);
+
+  const summitHandler = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (cardToEdit) {
+      handleEditCard();
+    } else {
+      handleCreateCard();
+    }
+  };
+
   const handleCreateCard = () => {
-    if (title) {
+    if (title && title.replace(/\s/g, '').length) {
       addCard(title);
+      handleModalVisible();
+    }
+  };
+
+  const handleEditCard = () => {
+    if (title && title.replace(/\s/g, '').length && cardToEdit) {
+      const sourceListIndex = data.lists
+        .map((e) => e.id)
+        .indexOf(cardToEdit.list);
+      const sourceCardIndex = data.lists[sourceListIndex].cards
+        .map((c) => c.id)
+        .indexOf(cardToEdit.id);
+      data.lists[sourceListIndex].cards[sourceCardIndex].title = title;
       handleModalVisible();
     }
   };
@@ -65,7 +94,10 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible }) => {
                   Create New Issue
                 </h3>
                 <div className="mt-2">
-                  <form className="bg-white rounded pt-6 pb-8">
+                  <form
+                    className="bg-white rounded pt-6 pb-8"
+                    onSubmit={(e: React.SyntheticEvent) => summitHandler(e)}
+                  >
                     <div className="mb-4">
                       <label
                         className="block text-gray-700 text-sm font-bold mb-2"
@@ -78,6 +110,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible }) => {
                         id="title"
                         type="text"
                         placeholder="Title"
+                        value={title}
                         onChange={(e) => setTitle(e.target.value)}
                       />
                     </div>
@@ -90,10 +123,11 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible }) => {
             <button
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm"
               type="button"
-              onClick={handleCreateCard}
+              onClick={cardToEdit ? handleEditCard : handleCreateCard}
             >
-              Create
+              {cardToEdit ? 'Edit' : 'Create'}
             </button>
+
             <button
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               type="button"

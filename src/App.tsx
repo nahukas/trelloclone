@@ -3,13 +3,14 @@ import { v4 as uuid } from 'uuid';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import store from './data/data';
-import { dataContext } from './utils/storeApi';
+import { dataContext } from './context/storeApi';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { ICard } from './components/List/Card';
 
 const App: React.FC = () => {
   const [data, setData] = useState(store);
+
   const addCard = (title: string) => {
     const cardId = uuid();
     const newCard: ICard = {
@@ -29,8 +30,9 @@ const App: React.FC = () => {
       return;
     }
 
-    const sourceListId = source.droppableId;
-    const sourceList = data.lists.find((list) => list.id === sourceListId);
+    const sourceList = data.lists.find(
+      (list) => list.id === source.droppableId
+    );
     const sourceListIndex = data.lists.map((e) => e.id).indexOf(sourceList!.id);
     const sourceCardIndex = data.lists[sourceListIndex].cards
       .map((c) => c.id)
