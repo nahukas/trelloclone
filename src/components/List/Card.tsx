@@ -1,5 +1,6 @@
 import React from 'react';
 import profilePic from '../../assets/profile.jpg';
+import moment from 'moment';
 import { Draggable } from 'react-beautiful-dnd';
 import { EnumColor, EnumTag } from '../../data/constants';
 
@@ -39,6 +40,8 @@ const Card: React.FC<CardProps> = ({
     return EnumColor.blue;
   };
 
+  const dateFormatted = moment(date).format('D MMM YY');
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -51,7 +54,7 @@ const Card: React.FC<CardProps> = ({
         >
           <span className="block p-5 bg-white rounded-sm shadow">
             <div className="flex justify-between">
-              <p className="text-sm font-medium leading-snug text-gray-900">
+              <p className="text-sm capitalize font-medium leading-snug text-gray-900">
                 {title}
               </p>
               <span>
@@ -60,7 +63,7 @@ const Card: React.FC<CardProps> = ({
             </div>
             <div className="flex justify-between items-center">
               <div className="text-sm text-gray-600">
-                <time dateTime="2020-09-14">{date}</time>
+                <time dateTime={dateFormatted}>{dateFormatted}</time>
               </div>
               {tag && (
                 <div className="mt-2">
