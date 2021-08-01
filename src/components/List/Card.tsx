@@ -1,6 +1,7 @@
 import React from 'react';
 import profilePic from '../../assets/profile.jpg';
 import { Draggable } from 'react-beautiful-dnd';
+import { EnumColor, EnumTag } from '../../data/constants';
 
 export interface ICard {
   id: string;
@@ -31,6 +32,13 @@ const Card: React.FC<CardProps> = ({
     handleModalVisible(listId, id);
   };
 
+  const tagColor = (tag: string) => {
+    if (tag === EnumTag.bug) {
+      return EnumColor.red;
+    }
+    return EnumColor.blue;
+  };
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -54,20 +62,30 @@ const Card: React.FC<CardProps> = ({
               <div className="text-sm text-gray-600">
                 <time dateTime="2020-09-14">{date}</time>
               </div>
-              <div className="mt-2">
-                <span className="px-2 py-1 leading-tight inline-flex items-center bg-blue-100 rounded">
-                  <svg
-                    className="h-2 w-2 text-blue-500"
-                    viewBox="0 0 8 8"
-                    fill="currentColor"
+              {tag && (
+                <div className="mt-2">
+                  <span
+                    className={`px-2 py-1 leading-tight inline-flex items-center bg-${tagColor(
+                      tag
+                    )}-100 rounded`}
                   >
-                    <circle cx="4" cy="4" r="3" />
-                  </svg>
-                  <span className="ml-2 text-sm font-medium text-blue-900">
-                    {tag}
+                    <svg
+                      className={`h-2 w-2 text-${tagColor(tag)}-500`}
+                      viewBox="0 0 8 8"
+                      fill="currentColor"
+                    >
+                      <circle cx="4" cy="4" r="3" />
+                    </svg>
+                    <span
+                      className={`ml-2 text-sm font-medium text-${tagColor(
+                        tag
+                      )}-900`}
+                    >
+                      {tag}
+                    </span>
                   </span>
-                </span>
-              </div>
+                </div>
+              )}
             </div>
           </span>
         </li>

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { dataContext } from '../context/storeApi';
+import { tags } from '../data/constants';
 import { ICardToEdit } from './List/Card';
 
 interface ModalProps {
@@ -10,10 +11,14 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
   const { addCard, data } = useContext(dataContext);
   const [title, setTitle] = useState('');
+  const [tag, setTag] = useState('');
 
   useEffect(() => {
     if (cardToEdit) {
       setTitle(cardToEdit.title);
+      if (cardToEdit.tag) {
+        setTag(cardToEdit.tag);
+      }
     }
   }, [cardToEdit]);
 
@@ -28,7 +33,8 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
 
   const handleCreateCard = () => {
     if (title && title.replace(/\s/g, '').length) {
-      addCard(title);
+      addCard(title, tag);
+      resetFrom();
       handleModalVisible();
     }
   };
@@ -42,8 +48,20 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
         .map((c) => c.id)
         .indexOf(cardToEdit.id);
       data.lists[sourceListIndex].cards[sourceCardIndex].title = title;
+      data.lists[sourceListIndex].cards[sourceCardIndex].tag = tag;
+      resetFrom();
       handleModalVisible();
     }
+  };
+
+  const handleCancel = () => {
+    resetFrom();
+    handleModalVisible();
+  };
+
+  const resetFrom = () => {
+    setTag('');
+    setTitle('');
   };
 
   return (
@@ -91,7 +109,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  Create New Issue
+                  {cardToEdit ? 'Edit Issue' : 'Create New Issue'}
                 </h3>
                 <div className="mt-2">
                   <form
@@ -112,7 +130,29 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                         placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        required
                       />
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                        htmlFor="title"
+                      >
+                        Tag
+                      </label>
+                      <select
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="tag"
+                        value={tag}
+                        onChange={(e) => setTag(e.target.value)}
+                      >
+                        <option value=""></option>
+                        {tags.map((tag) => (
+                          <option key={tag} value={tag}>
+                            {tag}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </form>
                 </div>
@@ -131,7 +171,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
             <button
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               type="button"
-              onClick={handleModalVisible}
+              onClick={handleCancel}
             >
               Cancel
             </button>

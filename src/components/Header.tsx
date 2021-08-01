@@ -34,21 +34,6 @@ const Header: React.FC<HeaderProps> = ({ handleModalVisible }) => {
           </div>
         </div>
         <div className="flex items-center">
-          <button>
-            <svg
-              className="h-6 w-6 text-gray-5 00"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                d="M15 17h5l=1.405A2.032 2.032 0 0118 14.158V11a6"
-              />
-            </svg>
-            bell icon
-          </button>
           <button className="ml-6">
             <img
               className="h-9 w-9 rounded-full object-cover"

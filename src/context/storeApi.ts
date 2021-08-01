@@ -3,7 +3,7 @@ import { IData } from '../data/data';
 
 interface IContext {
   data: IData;
-  addCard: (title: string) => void;
+  addCard: (title: string, tag?: string) => void;
 }
 
 const initial: IContext = {
