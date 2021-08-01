@@ -9,18 +9,34 @@ export interface ICard {
   tag?: string;
 }
 
+export interface ICardToEdit extends ICard {
+  list: string;
+}
 interface CardProps {
   card: ICard;
   index: number;
+  listId: string;
+  handleModalVisible: (listId?: string, cardId?: string) => void;
 }
 
-const Card: React.FC<CardProps> = ({ card, index }) => {
+const Card: React.FC<CardProps> = ({
+  card,
+  index,
+  listId,
+  handleModalVisible,
+}) => {
   const { id, title, date, tag } = card;
+
+  const handleClick = () => {
+    handleModalVisible(listId, id);
+  };
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <li
           className="mt-3 cursor-pointer"
+          onClick={() => handleClick()}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
