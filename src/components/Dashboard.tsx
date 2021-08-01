@@ -20,6 +20,8 @@ const Dashboard: React.FC = () => {
       const card = getCardByListId(listId, cardId, data) as ICardToEdit;
       card.list = listId;
       setCardToEdit(card);
+    } else {
+      setCardToEdit(undefined);
     }
     setIsModalVisible(!isModalVisible);
   };
