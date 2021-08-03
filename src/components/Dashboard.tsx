@@ -7,11 +7,13 @@ import { dataContext } from '../context/storeApi';
 
 import { getCardByListId } from '../utils/getCardByListId';
 import { ICardToEdit } from '../data/data';
+import ChangeUserModal from './ChangeUserModal';
 
 const Dashboard: React.FC = () => {
   const { data } = useContext(dataContext);
   const { lists } = data;
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [cardToEdit, setCardToEdit] = useState<ICardToEdit | undefined>(
     undefined
   );
@@ -27,6 +29,10 @@ const Dashboard: React.FC = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  const handleChangeUserModalVisible = () => {
+    setIsUserModalVisible(!isUserModalVisible);
+  };
+
   return (
     <>
       {isModalVisible && (
@@ -35,9 +41,18 @@ const Dashboard: React.FC = () => {
           cardToEdit={cardToEdit}
         />
       )}
+      {isUserModalVisible && (
+        <ChangeUserModal
+          handleChangeUserModalVisible={handleChangeUserModalVisible}
+        />
+      )}
+
       <div className="flex-1 min-w-0 bg-white">
         <div className="border-b-2 border-gray-200">
-          <Header handleModalVisible={handleModalVisible} />
+          <Header
+            handleModalVisible={handleModalVisible}
+            handleChangeUserModalVisible={handleChangeUserModalVisible}
+          />
         </div>
         <div>
           <main className="p-3 flex">

@@ -1,5 +1,4 @@
 import React from 'react';
-import profilePic from '../../assets/profile.jpg';
 import moment from 'moment';
 import { Draggable } from 'react-beautiful-dnd';
 import { EnumColor, EnumTag } from '../../data/constants';
@@ -18,7 +17,7 @@ const Card: React.FC<CardProps> = ({
   listId,
   handleModalVisible,
 }) => {
-  const { id, title, date, tag } = card;
+  const { id, title, date, tag, assignedTo } = card;
 
   const handleClick = () => {
     handleModalVisible(listId, id);
@@ -49,7 +48,11 @@ const Card: React.FC<CardProps> = ({
                 {title}
               </p>
               <span>
-                <img className="h-6 w-6 rounded-full" src={profilePic} alt="" />
+                <img
+                  className="h-6 w-6 rounded-full"
+                  src={`../img/${assignedTo}.jpg`}
+                  alt=""
+                />
               </span>
             </div>
             <div className="flex justify-between items-center">

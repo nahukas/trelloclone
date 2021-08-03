@@ -9,7 +9,9 @@ import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
   const [data, setData] = useState(store);
-  const currentUser = localStorage.getItem('trelloCloneUser') ?? 'nahuelCastro';
+  const [currentUser, setCurrentUser] = useState(
+    localStorage.getItem('trelloCloneUser') ?? 'nahuelCastro'
+  );
 
   const addCard = (title: string, assignedTo?: string, tag?: string) => {
     const cardId = uuid();
@@ -25,6 +27,10 @@ const App: React.FC = () => {
 
     data.lists[0].cards.push(newCard);
     setData(data);
+  };
+
+  const handleCurrentUser = (user: string) => {
+    setCurrentUser(user);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -60,6 +66,7 @@ const App: React.FC = () => {
         addCard,
         currentUser,
         data,
+        handleCurrentUser,
       }}
     >
       <DragDropContext onDragEnd={onDragEnd}>
