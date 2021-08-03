@@ -1,18 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
 import { dataContext } from '../context/storeApi';
-import NewProject from './NewProject';
+import CreateProjectModal from './CreateBoardModal';
+import NewBoard from './NewBoard';
 
 const Sidebar: React.FC = () => {
   const { data, currentUser } = useContext(dataContext);
+  const [isCreateBoardModalVisible, setIsCreateBoardModalVisible] =
+    useState(false);
   const [total, setTotal] = useState(0);
   const [createdByMe, setCreatedByMe] = useState(0);
   const [assignedToMe, setAssignedToMe] = useState(0);
 
   useEffect(() => {
-    const cards = data.lists
-      .map((list) => list.cards.map((card) => card))
-      .flat();
+    const cards = data.map((list) => list.cards.map((card) => card)).flat();
 
     setTotal(cards.length);
     setCreatedByMe(
@@ -23,8 +24,17 @@ const Sidebar: React.FC = () => {
     );
   }, [data, currentUser]);
 
+  const handleCreateBoardModalVisible = () => {
+    setIsCreateBoardModalVisible(!isCreateBoardModalVisible);
+  };
+
   return (
     <>
+      {isCreateBoardModalVisible && (
+        <CreateProjectModal
+          handleCreateBoardModalVisible={handleCreateBoardModalVisible}
+        />
+      )}
       <div className="w-64 px-8 py-3 bg-gray-50 border-r">
         <img className="h-9 w-9" src={logo} alt="" />
         <nav className="mt-8">
@@ -72,7 +82,7 @@ const Sidebar: React.FC = () => {
               </span>
             </a>
           </div>
-          <NewProject />
+          <NewBoard handleCreateBoardModal={handleCreateBoardModalVisible} />
         </nav>
       </div>
     </>

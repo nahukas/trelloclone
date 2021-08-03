@@ -45,16 +45,13 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
 
   const handleEditCard = () => {
     if (title && title.replace(/\s/g, '').length && cardToEdit) {
-      const sourceListIndex = data.lists
-        .map((e) => e.id)
-        .indexOf(cardToEdit.list);
-      const sourceCardIndex = data.lists[sourceListIndex].cards
+      const sourceListIndex = data.map((e) => e.id).indexOf(cardToEdit.list);
+      const sourceCardIndex = data[sourceListIndex].cards
         .map((c) => c.id)
         .indexOf(cardToEdit.id);
-      data.lists[sourceListIndex].cards[sourceCardIndex].title = title;
-      data.lists[sourceListIndex].cards[sourceCardIndex].tag = tag;
-      data.lists[sourceListIndex].cards[sourceCardIndex].assignedTo =
-        assignedTo;
+      data[sourceListIndex].cards[sourceCardIndex].title = title;
+      data[sourceListIndex].cards[sourceCardIndex].tag = tag;
+      data[sourceListIndex].cards[sourceCardIndex].assignedTo = assignedTo;
       resetFrom();
       handleModalVisible();
     }
@@ -136,6 +133,8 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                         placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        autoFocus={true}
+                        tabIndex={0}
                         required
                       />
                     </div>
@@ -151,6 +150,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                         id="assignedTo"
                         value={assignedTo}
                         onChange={(e) => setAssignedTo(e.target.value)}
+                        tabIndex={1}
                       >
                         <option value=""></option>
                         {users.map((user) => (
@@ -172,6 +172,7 @@ const Modal: React.FC<ModalProps> = ({ handleModalVisible, cardToEdit }) => {
                         id="tag"
                         value={tag}
                         onChange={(e) => setTag(e.target.value)}
+                        tabIndex={2}
                       >
                         <option value=""></option>
                         {tags.map((tag) => (
