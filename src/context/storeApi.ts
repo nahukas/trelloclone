@@ -5,6 +5,7 @@ interface IContext {
   data: IData;
   currentUser: string;
   addCard: (title: string, assignedBy?: string, tag?: string) => void;
+  handleCurrentUser: (user: string) => void;
 }
 
 const initial: IContext = {
@@ -13,6 +14,7 @@ const initial: IContext = {
   },
   currentUser: '',
   addCard: () => {},
+  handleCurrentUser: () => {},
 };
 
 export const dataContext = createContext<IContext>(initial);

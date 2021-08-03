@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { dataContext } from '../context/storeApi';
 import NewIssue from './NewIssue';
-import profilePic from '../assets/profile.jpg';
 
 interface HeaderProps {
   handleModalVisible: () => void;
+  handleChangeUserModalVisible: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ handleModalVisible }) => {
+const Header: React.FC<HeaderProps> = ({
+  handleModalVisible,
+  handleChangeUserModalVisible,
+}) => {
+  const { currentUser } = useContext(dataContext);
+
   return (
     <header className="px-6">
       <div className="flex justify-between items-center py-3 border-b border-gray-200">
@@ -34,10 +40,13 @@ const Header: React.FC<HeaderProps> = ({ handleModalVisible }) => {
           </div>
         </div>
         <div className="flex items-center">
-          <button className="ml-6">
+          <button
+            className="ml-6"
+            onClick={() => handleChangeUserModalVisible()}
+          >
             <img
               className="h-9 w-9 rounded-full object-cover"
-              src={profilePic}
+              src={`../img/${currentUser}.jpg`}
               alt="Your profile"
             />
           </button>
@@ -54,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ handleModalVisible }) => {
             <span className="-ml-2 rounded-full border-2 border-white">
               <img
                 className="h-6 w-6 rounded-full object-cover"
-                src={profilePic}
+                src={`../img/${currentUser}.jpg`}
                 alt=""
               />
             </span>
