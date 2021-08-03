@@ -10,5 +10,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-In this Trello clone project you can create, assign and move tasks between the lists using drag and drop.
-Search, filter and creation of new list are not available yet.
+* In this Trello clone project you can create, assign and move tasks between the lists using drag and drop.
+* Search, filter and creation of new list are not available yet.
+* By clicking on the header's picture you can change the active user. There is no login / signup page yet. (Don't worry I will not handle user's security like this)
