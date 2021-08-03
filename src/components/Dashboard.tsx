@@ -11,7 +11,7 @@ import ChangeUserModal from './ChangeUserModal';
 
 const Dashboard: React.FC = () => {
   const { data } = useContext(dataContext);
-  const { lists } = data;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [cardToEdit, setCardToEdit] = useState<ICardToEdit | undefined>(
@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div>
           <main className="p-3 flex">
-            {lists.map(({ id, title, cards }, index) => {
+            {data.map(({ id, title, cards }, index) => {
               return (
                 <List
                   key={id}

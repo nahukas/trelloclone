@@ -12,11 +12,9 @@ export interface ICardToEdit extends ICard {
 }
 
 export interface IData {
-  lists: {
-    id: string;
-    title: string;
-    cards: ICard[];
-  }[];
+  id: string;
+  title: string;
+  cards: ICard[];
 }
 
 const backlogCards = [
@@ -76,20 +74,18 @@ const doingCards = [
   },
 ];
 
-const data: IData = {
-  lists: [
-    {
-      id: 'list-1',
-      title: 'Backlog',
-      cards: backlogCards,
-    },
-    {
-      id: 'list-2',
-      title: 'Doing',
-      cards: doingCards,
-    },
-  ],
-};
+const data: IData[] = [
+  {
+    id: 'list-1',
+    title: 'Backlog',
+    cards: backlogCards,
+  },
+  {
+    id: 'list-2',
+    title: 'Doing',
+    cards: doingCards,
+  },
+];
 
 export interface IUser {
   username: string;

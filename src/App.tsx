@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
-import store, { ICard } from './data/data';
+import { ICard } from './data/data';
 import { dataContext } from './context/storeApi';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
-  const [data, setData] = useState(store);
+  let { data, setData } = useContext(dataContext);
+  const [newBoard, setNewBoard] = useState({});
   const [currentUser, setCurrentUser] = useState(
     localStorage.getItem('trelloCloneUser') ?? 'nahuelCastro'
   );
+
+  useEffect(() => {
+    if (newBoard) {
+      setData(data);
+    }
+  }, [newBoard, data, setData]);
 
   const addCard = (title: string, assignedTo?: string, tag?: string) => {
     const cardId = uuid();
@@ -25,8 +32,18 @@ const App: React.FC = () => {
       tag,
     };
 
-    data.lists[0].cards.push(newCard);
-    setData(data);
+    data[0].cards.push(newCard);
+  };
+
+  const addBoard = (boardName: string) => {
+    const listId = uuid();
+    const newBoard = {
+      id: listId,
+      title: boardName,
+      cards: [],
+    };
+    setNewBoard(newBoard);
+    data.push(newBoard);
   };
 
   const handleCurrentUser = (user: string) => {
@@ -40,33 +57,29 @@ const App: React.FC = () => {
       return;
     }
 
-    const sourceList = data.lists.find(
-      (list) => list.id === source.droppableId
-    );
-    const sourceListIndex = data.lists.map((e) => e.id).indexOf(sourceList!.id);
-    const sourceCardIndex = data.lists[sourceListIndex].cards
+    const sourceList = data.find((list) => list.id === source.droppableId);
+    const sourceListIndex = data.map((e) => e.id).indexOf(sourceList!.id);
+    const sourceCardIndex = data[sourceListIndex].cards
       .map((c) => c.id)
       .indexOf(draggableId);
-    const draggedCard = data.lists[sourceListIndex].cards[sourceCardIndex];
-    const destinationListIndex = data.lists
+    const draggedCard = data[sourceListIndex].cards[sourceCardIndex];
+    const destinationListIndex = data
       .map((e) => e.id)
       .indexOf(destination.droppableId);
 
-    data.lists[sourceListIndex].cards.splice(sourceCardIndex, 1);
-    data.lists[destinationListIndex].cards.splice(
-      destination.index,
-      0,
-      draggedCard
-    );
+    data[sourceListIndex].cards.splice(sourceCardIndex, 1);
+    data[destinationListIndex].cards.splice(destination.index, 0, draggedCard);
   };
 
   return (
     <dataContext.Provider
       value={{
-        addCard,
-        currentUser,
         data,
+        setData,
+        currentUser,
         handleCurrentUser,
+        addCard,
+        addBoard,
       }}
     >
       <DragDropContext onDragEnd={onDragEnd}>

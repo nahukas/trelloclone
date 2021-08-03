@@ -1,20 +1,22 @@
 import { createContext } from 'react';
-import { IData } from '../data/data';
+import store, { IData } from '../data/data';
 
 interface IContext {
-  data: IData;
+  data: IData[];
+  setData: (dataProps: IData[]) => void;
   currentUser: string;
-  addCard: (title: string, assignedBy?: string, tag?: string) => void;
   handleCurrentUser: (user: string) => void;
+  addCard: (title: string, assignedBy?: string, tag?: string) => void;
+  addBoard: (boardName: string) => void;
 }
 
 const initial: IContext = {
-  data: {
-    lists: [],
-  },
+  data: store,
+  setData: () => {},
   currentUser: '',
-  addCard: () => {},
   handleCurrentUser: () => {},
+  addCard: () => {},
+  addBoard: () => {},
 };
 
 export const dataContext = createContext<IContext>(initial);
